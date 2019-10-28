@@ -2,38 +2,42 @@
 
 ## Getting Started
 
-Get a copy of the repo and make sure you have installed all of the prerequisites
+Fork the repo and clone it to your machine. Make sure to install all of the prerequisites
 
-```
-$ git clone https://github.com/jobr3255/learning-ionic.git
-```
-
-### Prerequisites
-
-In order to run everything correctly you have to make sure you have the following installed
-* Git
+## Prerequisites
 * node.js
-* Java JDK
-* Android SDK
 * Ionic
 * Cordova
 
-You can check if you have any of the programs installed using
+##### Android development prerequisites
+* Java JDK
+* Android SDK
+
+## Installing
+
+Before installing anything, update your computer.
 ```
-$ nodejs -v
-```
-For git it's
-```
-$ git --version
-```
-To check if the environment paths are set up correctly run these
-```
-$ echo $JAVA_HOME
-$ echo $ANDROID_HOME
+$ sudo apt-get update
 ```
 
-### Installing ###
+#### Node.js and npm
+```
+$ sudo apt-get install nodejs
+$ sudo apt-get install npm
+```
 
+#### Ionic
+```
+$ npm install -g ionic
+```
+
+#### Cordova
+```
+$ npm install -g cordova
+```
+
+## Setting up Android
+These are only needed for Android development and deployment.
 #### Android SDK
 
 1. Download Android Studio from [here](https://developer.android.com/studio/)
@@ -69,26 +73,10 @@ $ sudo apt-get install default-jdk
 ```
 $ export JAVA_HOME=/usr/lib/jvm/java-8-oracle
 ```
-
-#### Node.js and npm
-1. Run these two commands
+To check if the environment paths are set up correctly run these
 ```
-$ sudo apt-get update
-$ sudo apt-get install nodejs
-```
-2. Now you install npm
-```
-$ sudo apt-get install npm
-```
-
-#### Ionic
-```
-$ npm install -g ionic
-```
-
-#### Cordova
-```
-$ npm install -g cordova
+$ echo $JAVA_HOME
+$ echo $ANDROID_HOME
 ```
 
 #### Putting your Android device in developer mode
@@ -100,35 +88,58 @@ $ npm install -g cordova
 
 ## Starting a project
 
-
+In a different directory run this command to produce a prebuilt Ionic tutorial project
 ```
 $ ionic start MyIonicProjectName tutorial --type=ionic-angular
 ```
-
-## Running the code in browser
-
-The run command will automatically run the compile and build commands before running
+Now move into that directory and run the application.
 ```
-$ ionic cordova run browser
+$ cd MyIonicProject/
+$ ionic serve
 ```
+Ionic will automatically open the application in your browser. Go ahead and look around to see what's provided by the tutorial. We will be starting from a blank project and adding everything ourselves.
 
-You can separately compile and build the application with these commands
-```
-$ ionic cordova compile browser
-$ ionic cordova build browser
-```
+Return to your terminal and stop the tutorial application with Ctrl+C. Now move back into the learning-ionic/ directory. Start this application and see what we have to start off with.
 
-## Running the code on Android
+### Running the project
+
+Currently we start the application with `ionic serve` but there are more ways to run the application. Running with `ionic serve` will automatically run the application in the browser but we can specify what platform we want to run it on.
+
+First we need to add what platform we want to run on. We'll just add browser for now but you can also add `android` and `ios`.
+```
+ionic cordova platform add browser
+```
+Now run the application
+```
+ionic cordova run browser
+```
+As you can see, Ionic will behave that same as running `ionic serve`
+
+### Working with Ionic
+Now it's time to start building an application in Ionic.
+
+
+
+
+
+
+
+
+## Android Development
+
+### Running the code on Android
 
 Before you can run the code you have to make sure you have an android device and that it's in developer mode.
 
+Add the Android platform to the application
+```
+ionic cordova platform add android
+```
 The run command will automatically run the compile and build commands before running
 ```
 $ ionic cordova run android
 ```
-Note that when you first run the application after cloning the repo that it will ask you if you want to install the project dependencies and you have to say yes.
-
-You can seperately compile and build the application with these commands
+You can separately compile and build the application with these commands
 ```
 $ ionic cordova compile android
 $ ionic cordova build android
