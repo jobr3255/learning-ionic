@@ -107,19 +107,129 @@ Currently we start the application with `ionic serve` but there are more ways to
 
 First we need to add what platform we want to run on. We'll just add browser for now but you can also add `android` and `ios`.
 ```
-ionic cordova platform add browser
+$ ionic cordova platform add browser
 ```
 Now run the application
 ```
-ionic cordova run browser
+$ ionic cordova run browser
 ```
-As you can see, Ionic will behave that same as running `ionic serve`
+As you can see, Ionic will behave that same as running `ionic serve`. There is one big difference though, `ionic serve` will run the application with live reload whereas `ionic cordova run browser` does not, for development it is much faster to run the application with `ionic serve`.
 
 ### Working with Ionic
-Now it's time to start building an application in Ionic.
+Now it's time to start building an application. Go ahead and start by running the application.
+
+Let's start off looking at the project folder structure in the src/ directory and understanding what does what.
+```
+src/
+	app/
+		app.component.ts
+		app.html
+		app.module.ts
+		app.scss
+		main.ts
+	assets/
+		icon/
+			favicon.ico
+		imgs/
+			logo.png
+	pages/
+		home/
+			home.html
+			home.scss
+			home.ts
+	theme/
+		variables.scss
+	index.html
+	manifest.json
+	service-worker.js
+```
+The `manifest.json` file has some basic startup configuration but you can leave all that alone.
+
+Most of the files in the `app/` directory can pretty much be ignored as you will rarely touch them. The only file you will need to understand is the `app.module.ts` file. This file configures the applications pages, imports, and providers that we use.
+
+The `assets/` directory is pretty straight forward, it has all the images and any other static files.
+
+The `pages/` directory is what the name says, it's got all the pages of our application. Each page will have its own folder with html, scss, and ts files. The html file is the front-end portion of the page and the scss file is the styling for that page, though there are not many cases when you will need special styling for a specific page. The ts is the back-end functionality of the page, here you can configure how buttons act and how the page interacts with providers but more on that later.
+
+The `theme/` directory has one file called `variables.scss`. The variables in this file are used for in-line color styling with Ionic's syntax. Take a look through the file and take note of the colors variable.
+
+##### Home page
+Let's start modifying the home page. Open up the `home.html`, change the page title to Home and add a welcome message for the home page.
+
+Now all this is really bland so let's change up the colors. In `home.scss`, change the background color to something else by adding the appropriate css.
+```
+page-home {
+  background-color: blue;
+}
+```
+Notice how the background didn't change. Inspect the page elements and find out why the background color isn't working.
+
+**Task:** Fix the scss file so that the background color displays a different color. *Hint: What class is overriding the background color for page-home? What css can be added to override that class?*
+
+You should end up with somethiing like this.
+![Blue home page](images/home-blue.png?raw=true)
+
+Now let's add a button. This is the syntax for an Ionic button.
+```
+<button ion-button color="primary">Do a thing</button>
+```
+Notice the `color="primary"` portion of this line. This is Ionic's in-line color styling. The `theme/variables.scss` file can be modified to change the default colors and add additional colors. Change the primary color to something else.
+
+![Home with button](images/home-with-button.png?raw=true)
+
+Now let's make the button actually do something. To make the button do something when clicked we add `(click)="doThing()"` to the button tag.
+```
+<button ion-button color="primary" (click)="doThing()">Do a thing</button>
+```
+If we test this you will just get an error because we haven't implemented doThing() on the backend. In the `home.ts` file we need to have a function to handle the doThing() call. Make a function below the constructor that will alert a message on the screen.
+```
+doThing(){
+	alert("I've done a thing!");
+}
+```
+Now when you press the button we have it alert to the screen!
+![Alert a thing](images/alert-thing.png?raw=true)
+
+##### Navbar and pages
+Our navbar is very boring and we don't even have any pages yet. First let's add some buttons to our navbar.
+
+**Task:** Add two new pages to the navbar.
+![Navbar buttons](images/navbar-buttons.png?raw=true)
+
+Now that we have buttons that we want to go to other pages we should probably make those pages. Making pages in Ionic is fairly simple, we just generate one from the terminal and let Ionic build a page for us.
+```
+$ ionic generate page About
+$ ionic generate page Another
+```
+Now we have an additional two pages. If you try to navigate to the url for these pages they will not appear and you will get an error. Notice how the newly generated pages have a module.ts file in their folders, we need to make one for the home page. Create a new file `pages/home/home.module.ts` and setup the module.ts page following the other pages module.ts files.
+
+Now we need to edit the `app.module.ts` file. We need to import the home page module and remove HomePage from declarations as it is already declared in `home.module.ts`. Add the imported home page module to the imports section. Your added code should look like this.
+```
+import { HomePageModule } from '../pages/home/home.module';
 
 
+imports: [
+	HomePageModule,
+	BrowserModule,
+	IonicModule.forRoot(MyApp)
+]
+```
+Now if we navigate to http://localhost:8100/#/about we should see the about page. Now let's make the the buttons on the home page actually go to the pages we want. Add code to the buttons to call a function, passing in the parameter of what page you want to go to as a string. We also need to add the function to the HomePage class.
+```
+<button ion-button (click)="goTo('HomePage')">Home</button>
 
+goTo(page){
+	// code to navigate to page
+}
+```
+There are two options to navigating to a page with Ionic, `push(page)` and `setRoot(page)` but first you need to understand the navigation stack. Ionic's navigation stack works just like it sounds, it's a stack that keeps track of where you've been. The root of the stack starts as the first page loaded, for our application that is the home page. Using `push(page)` will add that page to the stack and so on. Using `setRoot(page)` clears the stack and sets the root of the stack to the page that was passed in. Try using each one to see what the difference is.
+```
+this.navCtrl.push(page);
+this.navCtrl.setRoot(page);
+```
+More on the NavController https://ionicframework.com/docs/v3/api/navigation/NavController/
+
+Now that that's working we have a problem, only the home page has the navbar with the links. We need to build a navbar component.
 
 
 
