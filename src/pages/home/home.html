@@ -1,14 +1,19 @@
 <ion-header>
   <ion-navbar>
     <ion-title>
-      Ionic Blank
+      Home
     </ion-title>
+    <button ion-button (click)="goTo('HomePage')">Home</button>
+    <button ion-button (click)="goTo('AboutPage')">About</button>
+    <button ion-button (click)="goTo('AnotherPage')">Another Page</button>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <div>
+    Hello World
+  </div>
+  <div>
+    <button ion-button color="primary" (click)="doThing()">Do a thing</button>
+  </div>
 </ion-content>
