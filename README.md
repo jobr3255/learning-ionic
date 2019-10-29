@@ -166,7 +166,7 @@ Notice how the background didn't change. Inspect the page elements and find out 
 
 **Task:** Fix the scss file so that the background color displays a different color. *Hint: What class is overriding the background color for page-home? What css can be added to override that class?*
 
-You should end up with somethiing like this.
+You should end up with somethiing like this.<br>
 ![Blue home page](images/home-blue.png?raw=true)
 
 Now let's add a button. This is the syntax for an Ionic button.
@@ -187,13 +187,13 @@ doThing(){
 	alert("I've done a thing!");
 }
 ```
-Now when you press the button we have it alert to the screen!
+Now when you press the button we have it alert to the screen!<br>
 ![Alert a thing](images/alert-thing.png?raw=true)
 
 ##### Navbar and pages
 Our navbar is very boring and we don't even have any pages yet. First let's add some buttons to our navbar.
 
-**Task:** Add two new pages to the navbar.
+**Task:** Add two new pages to the navbar.<br>
 ![Navbar buttons](images/navbar-buttons.png?raw=true)
 
 Now that we have buttons that we want to go to other pages we should probably make those pages. Making pages in Ionic is fairly simple, we just generate one from the terminal and let Ionic build a page for us.
@@ -229,45 +229,81 @@ this.navCtrl.setRoot(page);
 ```
 More on the NavController https://ionicframework.com/docs/v3/api/navigation/NavController/
 
-Now that that's working we have a problem, only the home page has the navbar with the links. We need to build a navbar component.
+Now that that's working we have a problem, only the home page has the navbar with the links. We need to build a navbar component. First let's generate one.
+```
+$ ionic generate component MyNavbar
+```
+This creates a new components folder and creates the my-navbar component files. Now Ionic is stupid and doesn't generate a module.ts file for components so we have to write one ourselves. It looks pretty similar to what a page module looks like, here's what `my-navbar.module.ts` should look like.
+```
+import { NgModule } from '@angular/core';
+import { IonicPageModule } from 'ionic-angular';
+
+import { MyNavbarComponent } from './my-navbar';
+
+@NgModule({
+  declarations: [
+    MyNavbarComponent,
+  ],
+  imports: [
+    IonicPageModule.forChild(MyNavbarComponent),
+  ],
+  exports : [ MyNavbarComponent ]
+})
+export class MyNavbarComponentModule { }
+```
+Now in order to use the component we need to import it into whatever pages module we wan to use it in. Import the module for each of the pages.
+```
+import { MyNavbarComponentModule } from '../../components/my-navbar/my-navbar.module';
 
 
+imports: [
+	MyNavbarComponentModule,
+```
+Now we can add our component to `home.html`.
+```
+<button ion-button (click)="goTo('AnotherPage')">Another Page</button>
+<my-navbar></my-navbar>
+```
+Now we should get something like this.<br>
+![Hello world navbar](images/hello-nav.png?raw=true)
 
+Now let's move the navbar code from `home.html` to `my-navbar.html` and remove it from change it so it's just our custom navbar. Change the other two pages to match home.
 
+my-navbar.html
+```
+<ion-navbar>
+  <button ion-button (click)="goTo('HomePage')">Home</button>
+  <button ion-button (click)="goTo('AboutPage')">About</button>
+  <button ion-button (click)="goTo('AnotherPage')">Another Page</button>
+</ion-navbar>
+```
+home.html, about.html, another.html
+```
+<ion-header>
+  <my-navbar></my-navbar>
+</ion-header>
+...
+```
+Move the goTo function from HopePage to MyNavbarComponent. Make sure to import NavController and add it to the constructor. We can also remove the text variable as we don't need it.
 
-## Android Development
+Yay now we have a navbar on each page but now we have no title. Let's make our navbar component take a title variable and display the title.
 
-### Running the code on Android
+To use variables in components we need to use Ionic's `@Input()`. Import `Input` from `@angular/core`. Make a new title variable using `@Input` within the navbar class.
+```
+@Input() title: string;
+```
+To access variables from the html we have to use double curly brackets. Add this to our navbars html.
+```
+<ion-navbar>
+  <ion-title>
+    {{title}}
+  </ion-title>
+...
+```
+Now all we need to do is send the title value from our components tag.
+```
+<my-navbar title="Home"></my-navbar>
+```
+![Navbar title](images/nav-title.png?raw=true)
 
-Before you can run the code you have to make sure you have an android device and that it's in developer mode.
-
-Add the Android platform to the application
-```
-ionic cordova platform add android
-```
-The run command will automatically run the compile and build commands before running
-```
-$ ionic cordova run android
-```
-You can separately compile and build the application with these commands
-```
-$ ionic cordova compile android
-$ ionic cordova build android
-```
-
-#### Run with logs
-
-In order to run the application while being able to view the logs you can try running it normally with the capture logs flag
-```
-$ ionic cordova run android -c
-```
-But I never got it to work, there was always a connection error.
-
-The way around it is to run
-```
-$ adb logcat
-```
-By doing so you'll get every log from everything on the device, to narrow down the logs to just be from the application run
-```
-$ adb logcat SystemWebChromeClient:D *:S
-```
+Yay we did it!
