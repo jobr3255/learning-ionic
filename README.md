@@ -36,56 +36,6 @@ $ npm install -g ionic
 $ npm install -g cordova
 ```
 
-## Setting up Android
-These are only needed for Android development and deployment.
-#### Android SDK
-
-1. Download Android Studio from [here](https://developer.android.com/studio/)
-	1. Choose standard for the installation type and Finish
-	2. Open Android Studio and go to File -> Settings -> System Settings -> SDK Tools and install Google USB Driver
-2. Set the ANDROID_HOME variable to the location where your android sdk is located. For me (working in ubuntu virtual environment) it was in /home/user/Android/Sdk
-```
-$ export ANDROID_HOME=/home/user/Android/Sdk
-```
-3. Now add the tools and platform tools to your path
-```
-$ export PATH=$ANDROID_HOME/platform-tools:$ANDROID_HOME/tools:$PATH
-```
-You can check your path variable with
-```
-$ echo $PATH
-```
-
-#### Java JDK
-1. First update your package index
-```
-$ sudo apt-get update
-```
-2. Next install the Java Runtime Environment
-```
-$ sudo apt-get install default-jre
-```
-3. Now install the JDK
-```
-$ sudo apt-get install default-jdk
-```
-4. Set the JAVA_HOME path variable. Mine was located at /usr/lib/jvm/java-8-oracle
-```
-$ export JAVA_HOME=/usr/lib/jvm/java-8-oracle
-```
-To check if the environment paths are set up correctly run these
-```
-$ echo $JAVA_HOME
-$ echo $ANDROID_HOME
-```
-
-#### Putting your Android device in developer mode
-1. Go to your settings
-2. Scroll all the way to the bottom and tap on About Phone
-3. Repeatedly tap on Build Number until your phone is in developer mode
-4. Go back to settings, you should now have a new option called Developer options
-5. Go into Developer options and make sure that USB debugging is turned on. I also have OEM unlocking turned on but I don’t think you need it.
-
 ## Starting a project
 
 In a different directory run this command to produce a prebuilt Ionic tutorial project
@@ -307,3 +257,5 @@ Now all we need to do is send the title value from our components tag.
 ![Navbar title](images/nav-title.png?raw=true)
 
 Yay we did it!
+
+Ionic's documentation https://ionicframework.com/docs
