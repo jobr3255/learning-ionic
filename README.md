@@ -1,5 +1,20 @@
 # learning-ionic
 
+This is a tutorial for getting started working with Ionic.
+
+- [Prerequisites](#prerequisites)
+  - [Node.js and npm](#node.js-and-npm)
+  - [Ionic](#ionic)
+  - [Cordova](#cordova)
+- [Starting a project](#starting-a-project)
+	- [Running the project](#running-the-project)
+	- [Working with Ionic](#working-with-ionic)
+		- [Home page](#home-page)
+		- [Navbar and pages](#navbar-and-pages)
+
+More tutorials
+- [Android Development ](#Android.md)
+
 ## Getting Started
 
 Fork the repo and clone it to your machine. Make sure to install all of the prerequisites
@@ -9,29 +24,23 @@ Fork the repo and clone it to your machine. Make sure to install all of the prer
 * Ionic
 * Cordova
 
-##### Android development prerequisites
-* Java JDK
-* Android SDK
-
-## Installing
-
 Before installing anything, update your computer.
 ```
 $ sudo apt-get update
 ```
 
-#### Node.js and npm
+### Node.js and npm
 ```
 $ sudo apt-get install nodejs
 $ sudo apt-get install npm
 ```
 
-#### Ionic
+### Ionic
 ```
 $ npm install -g ionic
 ```
 
-#### Cordova
+### Cordova
 ```
 $ npm install -g cordova
 ```
@@ -103,7 +112,7 @@ The `pages/` directory is what the name says, it's got all the pages of our appl
 
 The `theme/` directory has one file called `variables.scss`. The variables in this file are used for in-line color styling with Ionic's syntax. Take a look through the file and take note of the colors variable.
 
-##### Home page
+#### Home page
 Let's start modifying the home page. Open up the `home.html`, change the page title to Home and add a welcome message for the home page.
 
 Now all this is really bland so let's change up the colors. In `home.scss`, change the background color to something else by adding the appropriate css.
@@ -137,10 +146,11 @@ doThing(){
 	alert("I've done a thing!");
 }
 ```
-Now when you press the button we have it alert to the screen!<br>
+Now when you press the button we have it alert to the screen!
+
 ![Alert a thing](images/alert-thing.png?raw=true)
 
-##### Navbar and pages
+#### Navbar and pages
 Our navbar is very boring and we don't even have any pages yet. First let's add some buttons to our navbar.
 
 **Task:** Add two new pages to the navbar.<br>
