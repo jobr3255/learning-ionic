@@ -13,7 +13,7 @@ This is a tutorial for getting started working with Ionic.
 		- [Navbar and pages](#navbar-and-pages)
 
 More tutorials
-- [Android Development ](#Android.md)
+- [Android Development ](ANDROID.md)
 
 ## Getting Started
 
